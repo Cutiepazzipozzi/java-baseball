@@ -1,7 +1,11 @@
 package baseball;
 
+import view.Announce;
+
 public class Application {
     public static void main(String[] args) {
-        // TODO: 프로그램 구현
+        GameController gameController = new GameController();
+        System.out.println(Announce.start.getAnnounce());
+        gameController.startGame();
     }
 }
