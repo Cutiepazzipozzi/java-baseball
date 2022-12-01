@@ -12,25 +12,50 @@ public class GameController {
 
     private GameModel gameModel = new GameModel();
 
-    public void finishGame() {
-        output.printHint(gameModel.getBallCount(), gameModel.getStrikeCount());
-        output.printResult();
-        String finishInput = input.finishEnterNumber();
+    public void startGame() {
+        System.out.println(Announce.start.getAnnounce());
+
+        this.inputUserNumber();
+    }
+
+    public void restartGame() {
+        this.gameModel = new GameModel();
+
+        this.inputUserNumber();
+    }
+
+    public void inputFinishCommand() {
+        String finishInput = input.enterFinishCommand();
+
         if (finishInput.equals("1")) {
-            gameModel = new GameModel();
-            startGame();
+            this.restartGame();
         }
     }
 
-    public void startGame() {
-        //System.out.println(gameModel.getAnswer());
-        String number = input.enterNumber();
+    public void inputUserNumber() {
+        String number = input.enterUserNumber();
+
         gameModel.count(number);
-        while (gameModel.getStrikeCount() != 3) {
-            output.printHint(gameModel.getBallCount(), gameModel.getStrikeCount());
-            gameModel.clearBallAndStrike();
-            startGame();
+
+        this.printHint();
+        this.judgeSuccess();
+    }
+
+    public void printHint() {
+        output.printHint(gameModel.getBallCount(), gameModel.getStrikeCount());
+    }
+
+    public void printSuccess() {
+        output.printHint(gameModel.getBallCount(), gameModel.getStrikeCount());
+        output.printResult();
+    }
+
+    public void judgeSuccess() {
+        if (gameModel.getStrikeCount() == 3) {
+            this.printSuccess();
+            this.inputFinishCommand();
+            return;
         }
-        finishGame();
+        this.inputUserNumber();
     }
 }
