@@ -1,6 +1,6 @@
 package baseball;
 
-import camp.nextstep.edu.missionutils.Randoms;
+import utils.RandomNumberGenerator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,19 +8,13 @@ import java.util.List;
 
 public class GameModel {
 
-    private final List<Integer> answer = new ArrayList<>();
+    private List<Integer> answer = RandomNumberGenerator.generate();
 
     private List<Integer> ballAndStrike;
 
-    public GameModel() {
-        while (answer.size() < 3) {
-            int number = Randoms.pickNumberInRange(1, 9);
-            if (!answer.contains(number)) {
-                answer.add(number);
-            }
-        }
-        ballAndStrike = new ArrayList<>(Arrays.asList(0, 0));
-    }
+    private int strikeCount = 0;
+
+    public GameModel() {}
 
     public int getBallCount() {
         return this.ballAndStrike.get(0);
@@ -57,7 +51,7 @@ public class GameModel {
         countStrike(numbers);
     }
 
-    public void clearBallAndStrike() {
-        ballAndStrike = new ArrayList<>(Arrays.asList(0,0));
+    private void changeAnswer() {
+        this.answer = RandomNumberGenerator.generate();
     }
 }
